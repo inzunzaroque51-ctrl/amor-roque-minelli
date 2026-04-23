@@ -51,9 +51,9 @@ export default function YouTubeMusicPlayer() {
           pointerEvents: "none",
           zIndex: -1,
         }}
-        src="https://www.youtube.com/embed/Nv5KACud_5Y?autoplay=1&controls=0&modestbranding=1&rel=0&fs=0"
-        allow="autoplay"
-        title="Spaces - One Direction"
+        src="https://www.youtube.com/embed/Xap94aAgSWM?autoplay=1&controls=0&modestbranding=1&rel=0&fs=0&mute=1"
+        allow="autoplay; encrypted-media"
+        title="Spaces - One Direction (Audio)"
       />
 
       {/* Botón de control de volumen */}
@@ -84,6 +84,23 @@ export default function YouTubeMusicPlayer() {
           }}
         />
       )}
+
+      {/* Nota para celular */}
+      <div
+        className="fixed bottom-24 left-6 glass-card p-3 rounded-lg text-xs max-w-xs z-40"
+        style={{
+          background: "oklch(0.14 0.04 265 / 70%)",
+          backdropFilter: "blur(16px)",
+          border: "1px solid oklch(0.78 0.12 20 / 30%)",
+          color: "oklch(0.75 0.04 60)",
+          display: isMuted ? "none" : "block",
+        }}
+      >
+        <p style={{ color: "oklch(0.82 0.1 55)", marginBottom: "4px", fontWeight: "600" }}>
+          🎵 Spaces
+        </p>
+        <p>Toca el botón de volumen para reproducir la música</p>
+      </div>
     </>
   );
 }
