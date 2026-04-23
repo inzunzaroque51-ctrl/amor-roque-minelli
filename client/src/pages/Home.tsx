@@ -177,9 +177,9 @@ function StarDivider() {
 
 // ── MAIN ────────────────────────────────────────────────────
 export default function Home() {
-  // Fecha de inicio de la relación — ajusta según corresponda
-  // Usamos la fecha de hoy menos 1 mes como ejemplo
-  const startDate = useRef(new Date(2025, 2, 23)); // 23 de marzo de 2025 (ejemplo)
+  // Fecha de inicio de la relación — 2 años 9 meses atrás
+  // Calculado desde hoy hacia atrás
+  const startDate = useRef(new Date(2022, 6, 23)); // 23 de julio de 2022 (2 años 9 meses atrás)
   const elapsed = useTimeCounter(startDate.current);
   const [showEnvelope, setShowEnvelope] = useState(false);
   const [envelopeOpen, setEnvelopeOpen] = useState(false);
@@ -375,11 +375,8 @@ export default function Home() {
               <h2 className="font-display text-4xl md:text-5xl font-bold mb-6" style={{ color: "oklch(0.9 0.04 60)" }}>
                 Eres la estrella más brillante de mi cielo
               </h2>
-              <p className="text-base leading-relaxed mb-6" style={{ color: "oklch(0.75 0.04 60)" }}>
-                Entre millones de personas en este mundo, el destino nos unió. Y desde ese momento, mi vida cambió para siempre. Tú, Minelli, eres la razón por la que miro al cielo y sonrío.
-              </p>
               <p className="text-base leading-relaxed" style={{ color: "oklch(0.75 0.04 60)" }}>
-                Cada noche que paso pensando en ti es una noche llena de luz. Eres mi constelación favorita, la que siempre busco cuando necesito orientarme.
+                Entre tantas personas, llegaste tú y todo cambió. Minelli, eres esa luz que siempre encuentro, la razón por la que sonrío sin darme cuenta. No necesito mirar al cielo para ver mi estrella favorita, porque la tengo en ti.
               </p>
             </AnimSection>
           </div>
