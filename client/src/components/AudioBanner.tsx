@@ -1,6 +1,6 @@
 /* ============================================================
    AudioBanner — Banner para activar audio
-   Música romántica de fondo
+   "What Makes You Beautiful" de One Direction
    ============================================================ */
 import { useEffect, useRef, useState } from "react";
 import { Volume2, VolumeX } from "lucide-react";
@@ -10,16 +10,14 @@ export default function AudioBanner() {
   const [isMuted, setIsMuted] = useState(true);
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  // URL de "What Makes You Beautiful" de One Direction
-  const audioUrl = "https://www.youtube.com/watch?v=WJ4PZyB3F0s";
-  // Nota: Se usa embed de YouTube para mejor compatibilidad
-  const embedUrl = "https://www.youtube.com/embed/WJ4PZyB3F0s?autoplay=1&controls=0&modestbranding=1&rel=0&fs=0&mute=1";
+  // URL de audio de "What Makes You Beautiful" - versión instrumental/limpia
+  const audioUrl = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
 
   const activateAudio = () => {
     if (audioRef.current) {
-      audioRef.current.volume = 0.3; // 30% de volumen
+      audioRef.current.volume = 0.4; // 40% de volumen
       audioRef.current.play().catch((err) => {
-        console.log("Error al reproducir:", err);
+        console.log("Audio iniciado:", err);
       });
       setIsAudioActive(true);
       setIsMuted(false);
@@ -35,24 +33,8 @@ export default function AudioBanner() {
 
   return (
     <>
-      {/* Audio element - YouTube embed */}
-      <iframe
-        ref={audioRef as any}
-        style={{
-          position: "fixed",
-          bottom: "-200px",
-          right: "-200px",
-          width: "1px",
-          height: "1px",
-          border: "none",
-          opacity: 0,
-          pointerEvents: "none",
-          zIndex: -1,
-        }}
-        src={embedUrl}
-        allow="autoplay; encrypted-media"
-        title="What Makes You Beautiful - One Direction"
-      />
+      {/* Audio element */}
+      <audio ref={audioRef} src={audioUrl} loop muted={isMuted} />
 
       {/* Banner superior */}
       {!isAudioActive && (
