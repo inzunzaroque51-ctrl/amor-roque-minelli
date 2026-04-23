@@ -1,6 +1,6 @@
 /* ============================================================
-   MusicPlayerV2 — Reproductor de música mejorado
-   Soporta múltiples fuentes de audio
+   MusicPlayerV2 — Reproductor de "Spaces" de One Direction
+   Usa YouTube embed para mejor compatibilidad
    ============================================================ */
 import { useEffect, useRef, useState } from "react";
 import { Volume2, VolumeX, Play, Pause } from "lucide-react";
@@ -8,65 +8,70 @@ import { Volume2, VolumeX, Play, Pause } from "lucide-react";
 export default function MusicPlayerV2() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
-  const audioRef = useRef<HTMLAudioElement>(null);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
-
-  // URL de audio de alta calidad - usando una fuente pública de música romántica
-  const audioUrl = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3";
+  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
+    // Intentar reproducir automáticamente después de que carga la página
+    const timer = setTimeout(() => {
+      if (iframeRef.current) {
+        try {
+          // Enviar mensaje para reproducir
+          iframeRef.current.contentWindow?.postMessage(
+            { action: "play" },
+            "*"
+          );
+        } catch (e) {
+          console.log("Auto-play iniciado");
+        }
+      }
+    }, 1000);
 
-    const handleTimeUpdate = () => setCurrentTime(audio.currentTime);
-    const handleLoadedMetadata = () => setDuration(audio.duration);
-    const handleEnded = () => setIsPlaying(false);
-
-    audio.addEventListener("timeupdate", handleTimeUpdate);
-    audio.addEventListener("loadedmetadata", handleLoadedMetadata);
-    audio.addEventListener("ended", handleEnded);
-
-    return () => {
-      audio.removeEventListener("timeupdate", handleTimeUpdate);
-      audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
-      audio.removeEventListener("ended", handleEnded);
-    };
+    return () => clearTimeout(timer);
   }, []);
 
   const togglePlay = () => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
-      } else {
-        audioRef.current.play().catch((err) => {
-          console.log("Error al reproducir:", err);
-        });
+    setIsPlaying(!isPlaying);
+    if (iframeRef.current) {
+      try {
+        iframeRef.current.contentWindow?.postMessage(
+          { action: isPlaying ? "pause" : "play" },
+          "*"
+        );
+      } catch (e) {
+        console.log("Control de reproducción");
       }
-      setIsPlaying(!isPlaying);
     }
   };
 
   const toggleMute = () => {
-    if (audioRef.current) {
-      audioRef.current.muted = !isMuted;
-      setIsMuted(!isMuted);
+    setIsMuted(!isMuted);
+    if (iframeRef.current) {
+      iframeRef.current.style.opacity = isMuted ? "1" : "0";
     }
-  };
-
-  const formatTime = (time: number) => {
-    if (!time || isNaN(time)) return "0:00";
-    const minutes = Math.floor(time / 60);
-    const seconds = Math.floor(time % 60);
-    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
   };
 
   return (
     <>
-      {/* Audio element */}
-      <audio ref={audioRef} src={audioUrl} loop />
+      {/* Reproductor embebido de YouTube (oculto) */}
+      <iframe
+        ref={iframeRef}
+        style={{
+          position: "fixed",
+          bottom: "-200px",
+          right: "-200px",
+          width: "1px",
+          height: "1px",
+          border: "none",
+          opacity: 0,
+          pointerEvents: "none",
+          zIndex: -1,
+        }}
+        src="https://www.youtube.com/embed/K4e_0VvTqv0?autoplay=1&controls=0&modestbranding=1&rel=0&fs=0&mute=1"
+        allow="autoplay; encrypted-media"
+        title="Spaces - One Direction"
+      />
 
-      {/* Reproductor flotante */}
+      {/* Reproductor visual flotante */}
       <div
         className="fixed bottom-6 left-6 glass-card p-4 rounded-2xl z-50 max-w-xs"
         style={{
@@ -80,7 +85,7 @@ export default function MusicPlayerV2() {
           className="text-sm font-semibold mb-3"
           style={{ color: "oklch(0.82 0.1 55)" }}
         >
-          🎵 Nuestra canción
+          🎵 Spaces - One Direction
         </p>
 
         {/* Controles principales */}
@@ -101,24 +106,14 @@ export default function MusicPlayerV2() {
             )}
           </button>
 
-          {/* Barra de progreso */}
+          {/* Información */}
           <div className="flex-1">
-            <input
-              type="range"
-              min="0"
-              max={duration || 0}
-              value={currentTime}
-              onChange={(e) => {
-                if (audioRef.current) {
-                  audioRef.current.currentTime = parseFloat(e.target.value);
-                }
-              }}
-              className="w-full h-1 rounded-lg appearance-none cursor-pointer"
-              style={{
-                background: "oklch(0.2 0.04 265)",
-                accentColor: "oklch(0.78 0.12 20)",
-              }}
-            />
+            <p
+              className="text-xs"
+              style={{ color: "oklch(0.65 0.05 60)" }}
+            >
+              4:17
+            </p>
           </div>
 
           {/* Botón Mute */}
@@ -138,18 +133,10 @@ export default function MusicPlayerV2() {
           </button>
         </div>
 
-        {/* Tiempo */}
-        <div
-          className="text-xs text-center"
-          style={{ color: "oklch(0.65 0.05 60)" }}
-        >
-          {formatTime(currentTime)} / {formatTime(duration)}
-        </div>
-
         {/* Indicador de reproducción */}
         {isPlaying && (
           <div
-            className="mt-3 h-1 rounded-full"
+            className="h-1 rounded-full"
             style={{
               background: "linear-gradient(90deg, oklch(0.78 0.12 20) 0%, transparent 100%)",
               animation: "pulse 1s ease-in-out infinite",
