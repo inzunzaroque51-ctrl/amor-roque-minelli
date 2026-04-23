@@ -10,14 +10,10 @@ export default function AudioBanner() {
   const [isMuted, setIsMuted] = useState(true);
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  // URL de música romántica pura instrumental (sin voces)
-  // Usando múltiples fuentes de audio romántico de alta calidad
-  const audioUrls = [
-    "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
-    "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3",
-    "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3",
-  ];
-  const audioUrl = audioUrls[0]; // Música romántica instrumental
+  // URL de "What Makes You Beautiful" de One Direction
+  const audioUrl = "https://www.youtube.com/watch?v=WJ4PZyB3F0s";
+  // Nota: Se usa embed de YouTube para mejor compatibilidad
+  const embedUrl = "https://www.youtube.com/embed/WJ4PZyB3F0s?autoplay=1&controls=0&modestbranding=1&rel=0&fs=0&mute=1";
 
   const activateAudio = () => {
     if (audioRef.current) {
@@ -39,8 +35,24 @@ export default function AudioBanner() {
 
   return (
     <>
-      {/* Audio element */}
-      <audio ref={audioRef} src={audioUrl} loop muted={isMuted} />
+      {/* Audio element - YouTube embed */}
+      <iframe
+        ref={audioRef as any}
+        style={{
+          position: "fixed",
+          bottom: "-200px",
+          right: "-200px",
+          width: "1px",
+          height: "1px",
+          border: "none",
+          opacity: 0,
+          pointerEvents: "none",
+          zIndex: -1,
+        }}
+        src={embedUrl}
+        allow="autoplay; encrypted-media"
+        title="What Makes You Beautiful - One Direction"
+      />
 
       {/* Banner superior */}
       {!isAudioActive && (
