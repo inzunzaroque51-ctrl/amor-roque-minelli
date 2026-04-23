@@ -7,7 +7,7 @@
 import { useEffect, useRef, useState } from "react";
 import StarCanvas from "@/components/StarCanvas";
 import FloatingHearts from "@/components/FloatingHearts";
-import AudioBanner from "@/components/AudioBanner";
+
 import { useInView } from "@/hooks/useInView";
 
 // ── Contador de tiempo ──────────────────────────────────────
@@ -218,7 +218,7 @@ export default function Home() {
     <div className="relative min-h-screen night-gradient" style={{ zIndex: 1 }}>
       <StarCanvas />
       <FloatingHearts />
-      <AudioBanner />
+
 
       {/* ── HERO ── */}
       <section
@@ -584,6 +584,29 @@ export default function Home() {
               </AnimSection>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ── CANCIÓN DEDICADA ── */}
+      <section className="relative py-24 px-4 text-center" style={{ zIndex: 2 }}>
+        <div className="max-w-2xl mx-auto">
+          <AnimSection>
+            <p className="font-script text-xl mb-3" style={{ color: "oklch(0.82 0.1 55)" }}>
+              Un regalo especial para ti
+            </p>
+            <h2 className="font-display text-4xl md:text-5xl font-bold mb-8" style={{ color: "oklch(0.9 0.04 60)" }}>
+              Te dedico esta canción
+            </h2>
+            <a
+              href="https://www.youtube.com/watch?v=xGPeNN9S0Fg&list=RDxGPeNN9S0Fg&start_radio=1"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block glass-card glow-box px-10 py-5 font-display text-xl font-semibold transition-all duration-300 hover:scale-105 active:scale-95"
+              style={{ color: "oklch(0.82 0.1 55)", border: "1px solid oklch(0.78 0.12 20 / 50%)" }}
+            >
+              🎵 Escucha aquí
+            </a>
+          </AnimSection>
         </div>
       </section>
 
