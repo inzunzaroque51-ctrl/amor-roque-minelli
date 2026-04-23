@@ -598,7 +598,7 @@ export default function Home() {
               Te dedico esta canción
             </h2>
             <a
-              href="https://www.youtube.com/watch?v=xGPeNN9S0Fg&list=RDxGPeNN9S0Fg&start_radio=1"
+              href="https://music.youtube.com/watch?v=nVuhPizu-YY"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block glass-card glow-box px-10 py-5 font-display text-xl font-semibold transition-all duration-300 hover:scale-105 active:scale-95"
