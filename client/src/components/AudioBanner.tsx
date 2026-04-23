@@ -10,8 +10,14 @@ export default function AudioBanner() {
   const [isMuted, setIsMuted] = useState(true);
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  // URL de música romántica pura (sin copyright)
-  const audioUrl = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3";
+  // URL de música romántica pura instrumental (sin voces)
+  // Usando múltiples fuentes de audio romántico de alta calidad
+  const audioUrls = [
+    "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
+    "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3",
+    "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3",
+  ];
+  const audioUrl = audioUrls[0]; // Música romántica instrumental
 
   const activateAudio = () => {
     if (audioRef.current) {
