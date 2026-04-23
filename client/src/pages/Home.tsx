@@ -7,7 +7,7 @@
 import { useEffect, useRef, useState } from "react";
 import StarCanvas from "@/components/StarCanvas";
 import FloatingHearts from "@/components/FloatingHearts";
-import MusicPlayer from "@/components/MusicPlayer";
+import YouTubeMusicPlayer from "@/components/YouTubeMusicPlayer";
 import { useInView } from "@/hooks/useInView";
 
 // ── Contador de tiempo ──────────────────────────────────────
@@ -218,7 +218,7 @@ export default function Home() {
     <div className="relative min-h-screen night-gradient" style={{ zIndex: 1 }}>
       <StarCanvas />
       <FloatingHearts />
-      <MusicPlayer />
+      <YouTubeMusicPlayer />
 
       {/* ── HERO ── */}
       <section
